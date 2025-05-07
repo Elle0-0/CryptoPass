@@ -217,6 +217,24 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "mint",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "name",
 				"outputs": [
@@ -434,11 +452,11 @@
 			]
 		},
 		"contracts/TicketToken.sol": {
-			"keccak256": "0xe04da3ab13891038a4fd9e77a016e8c5b2d7d147f4b904338c32a3a2eb7ef2ea",
+			"keccak256": "0xe20ac66c5a854ede558227bfbb97f533d858419de16f7701f2b86b03e424250c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2b497be8401342046f95a5c6e2a443bf060d3af030f59256f739e98209015d28",
-				"dweb:/ipfs/QmczR4jY9a4xpQUXCyEFh4Fne5Ja8u5dUNR8pxWNFUtvpD"
+				"bzz-raw://b262eba756dffa69d145b010a9bb794679c0b4b60cad2fcdb1b6a906707780a6",
+				"dweb:/ipfs/QmPfY1t3vxuRQXCRyco9MBevRDRyjKYruoy7EKt9QXMRUe"
 			]
 		}
 	},

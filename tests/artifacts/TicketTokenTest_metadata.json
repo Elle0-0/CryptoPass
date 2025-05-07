@@ -1,0 +1,165 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "beforeEach",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testApproveAndAllowance",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testBuyTicketFailsWrongEth",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testInitialSupply",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testRefundTicketFails_NotEnoughBalance",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testSetTicketPriceOnlyOwner",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testSetVendorFailsZeroAddress",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testSetVendorSuccess",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testTransferFail_NotEnoughBalance",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testTransferFromFailsWithoutApproval",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testTransferFromSuccess",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testTransferSuccess",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "testWithdrawFails_NotEnoughBalance",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"tests/TicketToken_test.sol": "TicketTokenTest"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/ERC20Interface.sol": {
+			"keccak256": "0x2722c4bb7b185e540e1a26bf36d6f07d3c7ef8a8c4294eb32f946f7decbb0855",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://78968905048ac572c45da87c1c2ca45179b4e9371a3f11a212103634c8c444b7",
+				"dweb:/ipfs/QmUY1Bxvj39cru2wzJvtMhkWxazY46KB6caZZxiXNwHDhb"
+			]
+		},
+		"contracts/TicketToken.sol": {
+			"keccak256": "0xe04da3ab13891038a4fd9e77a016e8c5b2d7d147f4b904338c32a3a2eb7ef2ea",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2b497be8401342046f95a5c6e2a443bf060d3af030f59256f739e98209015d28",
+				"dweb:/ipfs/QmczR4jY9a4xpQUXCyEFh4Fne5Ja8u5dUNR8pxWNFUtvpD"
+			]
+		},
+		"remix_tests.sol": {
+			"keccak256": "0xe2783cdc204cba8c72494119339f1d90f9022b15d6c718c668b7f097d8e29787",
+			"license": "GPL-3.0",
+			"urls": [
+				"bzz-raw://bb6a22e64c7f16bcaab63b1c1a1b269d5be8a6d37bdd9dec1718477ab916b18e",
+				"dweb:/ipfs/QmdkW1tT5iadBvaHMCoskhDGZKnfdg8o1D9CcoQYtdJet7"
+			]
+		},
+		"tests/TicketToken_test.sol": {
+			"keccak256": "0xa7895e5c8f9d7c6246f826570eed8e59797af4c2125873b4acf1852f391825ba",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4359dec8b2920345ccec17c6e32de368f5f99604cec6e3f913b23f168733e8d9",
+				"dweb:/ipfs/QmcPEgWnX4pcRoNtVSoKnAw3mShC4hGtorKxdB5UeaS3wH"
+			]
+		}
+	},
+	"version": 1
+}

@@ -11,7 +11,7 @@ contract TicketToken is ERC20Interface {
     address public owner;
     address public vendor;
 
-    uint256 public ticketPrice = 0.01 ether;
+    uint256 public ticketPrice = 0.05 ether;
 
     bool private locked;
 
@@ -129,6 +129,12 @@ contract TicketToken is ERC20Interface {
     function withdraw() external onlyOwner {
         payable(owner).transfer(address(this).balance);
     }
+
+    function mint(address to, uint256 amount) public {
+    require(msg.sender == vendor, "Only vendor can mint");
+    balances[to] += amount;
+}
+
 
     receive() external payable {}
 }
