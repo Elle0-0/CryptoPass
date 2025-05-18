@@ -1,26 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { Wallet, CreditCard, Ticket, RotateCcw } from 'lucide-react'; // Icon library
+import '../styles/HomePage.css'; // CSS for styling
 
 const HomePage = () => {
   return (
     <div className="homepage">
       <header className="homepage-header">
         <h1>Welcome to CryptoPass</h1>
-        <p>Your all-in-one solution for event ticketing on the blockchain.</p>
+        <p>Secure and seamless blockchain ticketing—right at your fingertips.</p>
       </header>
-      <div className="homepage-buttons">
-        <Link to="/wallet">
-          <button className="homepage-button">Manage Wallet</button>
+
+      <div className="homepage-buttons-grid">
+        <Link to="/wallet" className="homepage-button-card">
+          <Wallet size={32} />
+          <span>Manage Wallet</span>
         </Link>
-        <Link to="/balance">
-          <button className="homepage-button">Check Balances</button>
+
+        <Link to="/balance" className="homepage-button-card">
+          <CreditCard size={32} />
+          <span>Check Balances</span>
         </Link>
-        <Link to="/buy-ticket">
-          <button className="homepage-button">Buy Tickets</button>
+
+        <Link to="/buy-ticket" className="homepage-button-card">
+          <Ticket size={32} />
+          <span>Buy Tickets</span>
         </Link>
-        <Link to="/return-ticket">
-          <button className="homepage-button">Return Tickets</button>
+
+        <Link to="/return-ticket" className="homepage-button-card">
+          <RotateCcw size={32} />
+          <span>Return Tickets</span>
         </Link>
       </div>
     </div>

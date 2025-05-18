@@ -39,17 +39,13 @@ function DecryptWallet() {
     }
 
     try {
-      const { web3 } = await initWeb3(); // Use the existing initWeb3 function
+      const { web3 } = await initWeb3();
       const wallet = web3.eth.accounts.decrypt(keystore, password);
-
-      console.log('Keystore string:', keystore);
-      console.log('Wallet address:', wallet.address);
 
       setWalletAddress(wallet.address);
       setPrivateKey(wallet.privateKey);
       setKeystoreText(keystore);
     } catch (err) {
-      console.error('Decryption failed:', err);
       setError('Decryption failed: ' + err.message);
       setShowModal(true);
     }
@@ -60,69 +56,74 @@ function DecryptWallet() {
   };
 
   return (
-    <div className="DecryptWallet" style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>Decrypt a Wallet</h1>
+    <div className="create-wallet-container">
+      <h1 className="title">Decrypt a Wallet</h1>
 
-      <div style={{ marginBottom: '20px' }}>
-        <label>
-          Password for Keystore:
-          <input
-            type="password"
-            placeholder="Enter a password for the Key Store"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ marginLeft: '10px', padding: '5px', width: '300px' }}
-          />
-        </label>
+      <div className="form-group">
+        <label>Password for Keystore</label>
+        <input
+          type="password"
+          className="input"
+          placeholder="Enter password for the Key Store"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </div>
 
-      <div style={{ marginBottom: '20px' }}>
-        <label>
-          Keystore File:
-          <input
-            type="file"
-            accept=".json"
-            onChange={handleFileUpload}
-            style={{ marginLeft: '10px' }}
-          />
-        </label>
+      <div className="form-group">
+        <label>Keystore File</label>
+        <input
+          type="file"
+          accept=".json"
+          className="input"
+          onChange={handleFileUpload}
+        />
       </div>
 
-      <button onClick={decryptWallet} style={{ padding: '10px 20px', cursor: 'pointer' }}>
+      <button className="button" onClick={decryptWallet}>
         Decrypt Wallet
       </button>
 
       {walletAddress && (
-        <div style={{ marginTop: '20px' }}>
-          <h3>Decrypted Wallet Details</h3>
-          <p>
-            <strong>Wallet Address:</strong>
-            <textarea rows="2" cols="50" value={walletAddress} readOnly style={{ marginTop: '10px' }} />
-          </p>
-          <p>
-            <strong>Private Key:</strong>
-            <textarea rows="2" cols="50" value={privateKey} readOnly style={{ marginTop: '10px' }} />
-          </p>
-          <p>
-            <strong>Keystore File:</strong>
-            <textarea rows="5" cols="50" value={keystoreText} readOnly style={{ marginTop: '10px' }} />
-          </p>
+        <div className="wallet-details">
+          <div className="detail">
+            <label>Wallet Address:</label>
+            <textarea
+              className="textarea"
+              rows="2"
+              value={walletAddress}
+              readOnly
+            />
+          </div>
+
+          <div className="detail">
+            <label>Private Key:</label>
+            <textarea
+              className="textarea"
+              rows="2"
+              value={privateKey}
+              readOnly
+            />
+          </div>
+
+          <div className="detail">
+            <label>Keystore File:</label>
+            <textarea
+              className="textarea"
+              rows="5"
+              value={keystoreText}
+              readOnly
+            />
+          </div>
         </div>
       )}
 
-      {/* Error Modal */}
       {showModal && (
-        <div className="modal" style={{ marginTop: '20px', border: '1px solid #ccc', padding: '10px' }}>
-          <div className="modal-content">
-            <span
-              className="close"
-              onClick={closeModal}
-              style={{ cursor: 'pointer', float: 'right', fontSize: '20px', fontWeight: 'bold' }}
-            >
-              &times;
-            </span>
-            <p style={{ color: 'red' }}>{error}</p>
-          </div>
+        <div className="message error">
+          <span style={{ float: 'right', cursor: 'pointer' }} onClick={closeModal}>
+            &times;
+          </span>
+          <p>{error}</p>
         </div>
       )}
     </div>

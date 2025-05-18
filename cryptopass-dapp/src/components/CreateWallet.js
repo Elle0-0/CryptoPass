@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { initWeb3 } from './TicketToken';
+import '../styles/CreateWallet.css'; 
 
 function CreateWallet() {
   const [password, setPassword] = useState('');
@@ -9,12 +10,8 @@ function CreateWallet() {
   const [message, setMessage] = useState('');
 
   const validatePassword = (password) => {
-    if (password.includes(' ')) {
-      return 'Password cannot contain spaces.';
-    }
-    if (password.length < 3) {
-      return 'Password must be at least 3 characters long.';
-    }
+    if (password.includes(' ')) return 'Password cannot contain spaces.';
+    if (password.length < 3) return 'Password must be at least 3 characters long.';
     return null;
   };
 
@@ -26,8 +23,8 @@ function CreateWallet() {
     }
 
     try {
-      const { web3 } = await initWeb3(); // Use the existing initWeb3 function
-      const wallet = web3.eth.accounts.create(); // Create a new wallet
+      const { web3 } = await initWeb3();
+      const wallet = web3.eth.accounts.create();
       setWalletAddress(wallet.address);
       setPrivateKey(wallet.privateKey);
 
@@ -41,7 +38,7 @@ function CreateWallet() {
   };
 
   const downloadKeystore = () => {
-    if (keystore === '') {
+    if (!keystore) {
       alert('Please create a wallet first.');
       return;
     }
@@ -55,44 +52,51 @@ function CreateWallet() {
   };
 
   return (
-    <div className="CreateWalletPage" style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>Create a Wallet</h1>
+    <div className="create-wallet-container">
+      <h1 className="title">Create a Wallet</h1>
 
-      <div style={{ marginBottom: '20px' }}>
-        <label>
-          Password for Keystore:
-          <input
-            type="password"
-            placeholder="Enter a password for the Key Store"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ marginLeft: '10px', padding: '5px', width: '300px' }}
-          />
-        </label>
+      <div className="form-group">
+        <label htmlFor="password">Password for Keystore:</label>
+        <input
+          id="password"
+          type="password"
+          placeholder="Enter a password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="input"
+        />
       </div>
 
-      <button onClick={createWallet} style={{ padding: '10px 20px', cursor: 'pointer' }}>
+      <button className="button" onClick={createWallet}>
         Create Wallet
       </button>
 
-      {message && <p style={{ marginTop: '20px', color: message.includes('successfully') ? 'green' : 'red' }}>{message}</p>}
+      {message && (
+        <p className={`message ${message.includes('successfully') ? 'success' : 'error'}`}>
+          {message}
+        </p>
+      )}
 
       {walletAddress && (
-        <div style={{ marginTop: '20px' }}>
+        <div className="wallet-details">
           <h3>Wallet Details</h3>
-          <p>
-            <strong>Wallet Address:</strong>
-            <textarea rows="2" cols="50" value={walletAddress} readOnly style={{ marginTop: '10px' }} />
-          </p>
-          <p>
-            <strong>Private Key:</strong>
-            <textarea rows="2" cols="50" value={privateKey} readOnly style={{ marginTop: '10px' }} />
-          </p>
-          <p>
-            <strong>Keystore File:</strong>
-            <textarea rows="5" cols="50" value={keystore} readOnly style={{ marginTop: '10px' }} />
-          </p>
-          <button onClick={downloadKeystore} style={{ marginTop: '10px', padding: '10px 20px', cursor: 'pointer' }}>
+
+          <div className="detail">
+            <label>Wallet Address:</label>
+            <textarea value={walletAddress} readOnly className="textarea" rows="2" />
+          </div>
+
+          <div className="detail">
+            <label>Private Key:</label>
+            <textarea value={privateKey} readOnly className="textarea" rows="2" />
+          </div>
+
+          <div className="detail">
+            <label>Keystore File:</label>
+            <textarea value={keystore} readOnly className="textarea" rows="5" />
+          </div>
+
+          <button className="button secondary" onClick={downloadKeystore}>
             Download Keystore
           </button>
         </div>

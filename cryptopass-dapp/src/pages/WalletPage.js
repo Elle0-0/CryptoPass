@@ -6,19 +6,19 @@ function WalletPage() {
   const [activeTab, setActiveTab] = useState('create');
 
   return (
-    <div className="WalletPage">
-      <h1>Wallet Management</h1>
+    <div className="wallet-page-container">
+      <h1 className="wallet-title">Wallet Management</h1>
 
       <div className="tab-buttons">
-        <button 
-          onClick={() => setActiveTab('create')} 
-          className={activeTab === 'create' ? 'active' : ''}
+        <button
+          onClick={() => setActiveTab('create')}
+          className={`tab-button ${activeTab === 'create' ? 'active' : ''}`}
         >
           Create Wallet
         </button>
-        <button 
-          onClick={() => setActiveTab('decrypt')} 
-          className={activeTab === 'decrypt' ? 'active' : ''}
+        <button
+          onClick={() => setActiveTab('decrypt')}
+          className={`tab-button ${activeTab === 'decrypt' ? 'active' : ''}`}
         >
           Decrypt Wallet
         </button>

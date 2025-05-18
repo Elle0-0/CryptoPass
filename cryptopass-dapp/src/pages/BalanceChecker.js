@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
-  initWeb3,
-  getBalance,
-  getTicketPrice,
-  getVendor,
-  getTotalSupply,
-  transferFrom,
-  setDoorman,
-} from '../components/TicketToken';
+  initWeb3, getBalance, getTicketPrice, getVendor, getTotalSupply } from '../components/TicketToken';
 import Web3 from 'web3';
+import '../styles/BalanceChecker.css'; 
 
 const BalanceChecker = () => {
   const [tab, setTab] = useState('user');
@@ -24,31 +18,6 @@ const BalanceChecker = () => {
   const [burnAmount, setBurnAmount] = useState('1');
   const [message, setMessage] = useState('');
 
-  // Initialize the doorman when the app starts
-  useEffect(() => {
-    const initializeDoorman = async () => {
-      try {
-        const { web3 } = await initWeb3();
-        const accounts = await web3.eth.getAccounts();
-        const ownerAddress = accounts[0];
-        const doormanAddress = process.env.REACT_APP_DOORMAN_ADDRESS;
-
-        if (!doormanAddress) {
-          console.error('Doorman address is not defined in the environment variables.');
-          return;
-        }
-
-        await setDoorman(doormanAddress, true, ownerAddress);
-        console.log(`Doorman ${doormanAddress} has been successfully set.`);
-      } catch (error) {
-        console.error('Error initializing doorman:', error);
-      }
-    };
-
-    initializeDoorman();
-  }, []);
-
-  // Connect MetaMask Wallet
   const connectWallet = async () => {
     try {
       const { web3 } = await initWeb3();
@@ -66,7 +35,6 @@ const BalanceChecker = () => {
     }
   };
 
-  // Handle Keystore File Upload
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -76,7 +44,6 @@ const BalanceChecker = () => {
     }
   };
 
-  // Check Balances
   const handleCheckBalance = async () => {
     try {
       const { web3 } = await initWeb3();
@@ -99,7 +66,6 @@ const BalanceChecker = () => {
     }
   };
 
-  // Fetch Ticket Details
   const handleFetchDetails = async () => {
     try {
       const price = await getTicketPrice();
@@ -113,15 +79,12 @@ const BalanceChecker = () => {
     }
   };
 
-  // Burn Tickets
   const handleBurnTicket = async () => {
     try {
-      const { web3 } = await initWeb3();
+      const { web3, contract } = await initWeb3();
       const accounts = await web3.eth.getAccounts();
       const doorman = accounts[0];
-      const doormanAddress = process.env.REACT_APP_DOORMAN_ADDRESS;
-  
-      // Validate inputs
+
       if (!burnTarget || !web3.utils.isAddress(burnTarget)) {
         setMessage('Invalid target wallet address.');
         return;
@@ -130,8 +93,8 @@ const BalanceChecker = () => {
         setMessage('Invalid ticket amount to burn.');
         return;
       }
-  
-      await transferFrom(burnTarget, doormanAddress, burnAmount, doorman);
+
+      await contract.methods.burn(burnTarget, burnAmount).send({ from: doorman });
       setMessage(`Successfully burned ${burnAmount} ticket(s) from ${burnTarget}.`);
     } catch (error) {
       console.error('Error burning ticket:', error);
@@ -139,19 +102,13 @@ const BalanceChecker = () => {
     }
   };
 
-  // Render Tabs
   const renderTabs = () => (
-    <div style={{ marginBottom: '20px' }}>
+    <div className="tab-buttons">
       {['user', 'doorman', 'vendor'].map((t) => (
         <button
           key={t}
           onClick={() => setTab(t)}
-          style={{
-            marginRight: '10px',
-            padding: '10px',
-            backgroundColor: tab === t ? '#ccc' : '#f5f5f5',
-            cursor: 'pointer',
-          }}
+          className={`tab-button ${tab === t ? 'active' : ''}`}
         >
           {t.charAt(0).toUpperCase() + t.slice(1)}
         </button>
@@ -160,98 +117,92 @@ const BalanceChecker = () => {
   );
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
-      <h1>Ticket Token Dashboard</h1>
+    <div className="create-wallet-container balance-checker-container">
+      <h1 className="title">Ticket Token Dashboard</h1>
       {renderTabs()}
 
       {tab === 'user' && (
         <>
-          <div>
-            <label>
-              Wallet Address (MetaMask):
-              <input
-                type="text"
-                value={walletAddress}
-                readOnly
-                style={{ marginLeft: '10px', padding: '5px', width: '300px' }}
-              />
-            </label>
-            <button onClick={connectWallet} style={{ marginLeft: '10px' }}>Connect Wallet</button>
+          <div className="form-group">
+            <label>Wallet Address (MetaMask):</label>
+            <input
+              type="text"
+              value={walletAddress}
+              readOnly
+              className="input"
+              placeholder="Connect your wallet"
+            />
+            <button className="button" onClick={connectWallet}>Connect Wallet</button>
           </div>
 
-          <div style={{ marginTop: '20px' }}>
-            <label>
-              Keystore File:
-              <input type="file" accept=".json" onChange={handleFileUpload} style={{ marginLeft: '10px' }} />
-            </label>
+          <div className="form-group">
+            <label>Keystore File:</label>
+            <input type="file" accept=".json" onChange={handleFileUpload} className="input-file" />
           </div>
 
-          <div style={{ marginTop: '10px' }}>
-            <label>
-              Password:
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your keystore password"
-                style={{ marginLeft: '10px', padding: '5px', width: '300px' }}
-              />
-            </label>
+          <div className="form-group">
+            <label>Password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your keystore password"
+              className="input"
+            />
           </div>
 
-          <button onClick={handleCheckBalance} style={{ marginTop: '20px' }}>Check Balances</button>
+          <button className="button" onClick={handleCheckBalance}>Check Balances</button>
 
-          <div style={{ marginTop: '20px' }}>
+          <div className="wallet-details">
             <h3>Balances</h3>
-            <p>Crypto Balance: {cryptoBalance} ETH</p>
-            <p>Ticket Token Balance: {ticketBalance}</p>
+            <p>Crypto Balance: {cryptoBalance || '-' } ETH</p>
+            <p>Ticket Token Balance: {ticketBalance || '-'}</p>
           </div>
         </>
       )}
 
       {tab === 'doorman' && (
-        <div>
+        <>
           <h3>Burn Ticket</h3>
-          <label>
-            Target Wallet:
+          <div className="form-group">
+            <label>Target Wallet:</label>
             <input
               type="text"
               value={burnTarget}
               onChange={(e) => setBurnTarget(e.target.value)}
               placeholder="Wallet address to burn from"
-              style={{ marginLeft: '10px', width: '400px' }}
+              className="input"
             />
-          </label>
-          <br /><br />
-          <label>
-            Amount to Burn:
+          </div>
+
+          <div className="form-group">
+            <label>Amount to Burn:</label>
             <input
               type="number"
               value={burnAmount}
               onChange={(e) => setBurnAmount(e.target.value)}
               min="1"
-              style={{ marginLeft: '10px' }}
+              className="input"
             />
-          </label>
-          <br /><br />
-          <button onClick={handleBurnTicket}>Confirm & Burn Ticket</button>
-        </div>
+          </div>
+
+          <button className="button" onClick={handleBurnTicket}>Confirm & Burn Ticket</button>
+        </>
       )}
 
       {tab === 'vendor' && (
-        <div>
+        <>
           <h3>Vendor Dashboard</h3>
-          <button onClick={handleFetchDetails}>Fetch Ticket Details</button>
-          <p>Ticket Price: {ticketPrice} ETH</p>
-          <p>Total Tickets Minted: {totalTickets}</p>
-          <p>Vendor Address: {vendorAddress}</p>
-        </div>
+          <button className="button" onClick={handleFetchDetails}>Fetch Ticket Details</button>
+          <p>Ticket Price: {ticketPrice || '-' } ETH</p>
+          <p>Total Tickets Minted: {totalTickets || '-'}</p>
+          <p>Vendor Address: {vendorAddress || '-'}</p>
+        </>
       )}
 
-      {message && <p style={{ marginTop: '20px', color: 'blue' }}>{message}</p>}
+      {message && <p className="message">{message}</p>}
     </div>
   );
 };
 
 export default BalanceChecker;
-
