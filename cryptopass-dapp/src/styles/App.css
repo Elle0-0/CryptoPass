@@ -1,8 +1,8 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
+  background: linear-gradient(135deg, #2a2a3e, #1f1f2e); /* Slightly lighter dark gradient */
+  color: #e0e0e0; /* Light text for contrast */
 }
 
 .App {
@@ -11,31 +11,41 @@ body {
 }
 
 h1, h2, h3 {
-  color: #5e60ce;
+  color: #9d4edd; /* Vibrant purple for headings */
+  background: linear-gradient(90deg, #9d4edd, #4caf50); /* Gradient highlight */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 a {
   text-decoration: none;
-  color: inherit;
+  color: #9d4edd; /* Purple links */
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #4caf50; /* Neon green hover effect */
 }
 
 button {
   padding: 10px 20px;
   margin-top: 10px;
-  background: #5e60ce;
+  background: linear-gradient(135deg, #9d4edd, #6a1b9a); /* Gradient button background */
   border: none;
   color: white;
   cursor: pointer;
   border-radius: 8px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 button:hover {
-  background-color: #4caf50;
+  background: linear-gradient(135deg, #4caf50, #9d4edd); /* Gradient shift on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 4px 14px rgba(77, 255, 136, 0.5); /* Glowing shadow */
 }
 
 button:active {
-  background-color: #3e8e41;
+  background-color: #4caf50; /* Neon green on click */
 }
 
 .container {
@@ -44,86 +54,21 @@ button:active {
   padding: 20px;
 }
 
-.tab-buttons {
-  margin-bottom: 20px;
-}
-
-.tab-buttons button {
-  margin-right: 10px;
-  padding: 10px 20px;
-  cursor: pointer;
-  background-color: #f0f0f0;
-  border: none;
-  border-bottom: 2px solid transparent;
-}
-
-.tab-buttons button.active {
-  border-bottom: 2px solid #007bff;
-  font-weight: bold;
-}
-
-.tab-content {
-  margin-top: 20px;
-}
-.homepage {
-  text-align: center;
-  padding: 2rem;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f5f5f5;
-  min-height: 100vh;
-}
-
-.homepage-header {
-  margin-bottom: 2rem;
-}
-
-.homepage-header h1 {
-  font-size: 2.5rem;
-  color: #5e60ce;
-}
-
-.homepage-header p {
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.homepage-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-.homepage-button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: white;
-  background-color: #5e60ce;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.homepage-button:hover {
-  background-color: #4caf50;
-}
-
-.homepage-button:active {
-  background-color: #3e8e41;
-}
+/* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #5e60ce;
+  background-color: #2a2a3e;
   padding: 10px 20px;
   color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .navbar-logo {
   font-size: 1.5rem;
   font-weight: bold;
+  color: #9d4edd;
 }
 
 .navbar-links {
@@ -140,20 +85,21 @@ button:active {
 
 .navbar-links a {
   text-decoration: none;
-  color: white;
+  color: #e0e0e0;
   font-size: 1rem;
   transition: color 0.3s ease;
 }
 
 .navbar-links a:hover {
-  color: #4caf50;
+  color: #4caf50; /* Neon green hover effect */
 }
 
+/* Footer */
 .footer {
   text-align: center;
   padding: 1rem 0;
-  background-color: #5e60ce;
-  color: white;
+  background-color: #2a2a3e;
+  color: #e0e0e0;
   position: relative;
   bottom: 0;
   width: 100%;

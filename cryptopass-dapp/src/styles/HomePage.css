@@ -1,0 +1,58 @@
+.homepage {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #1a1a2e, #16213e); /* Dark gradient background */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #e0e0e0;
+  }
+  
+  .homepage-header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    color: #9d4edd;
+  }
+  
+  .homepage-header p {
+    font-size: 1.3rem;
+    color: #aaa;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+  }
+  
+  .homepage-buttons-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+  }
+  
+  .homepage-button-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #222831;
+    color: #e0e0e0;
+    text-decoration: none;
+    border-radius: 12px;
+    padding: 1.5rem 1rem;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    min-width: 220px;
+  }
+  
+  .homepage-button-card:hover {
+    background-color: #9d4edd;
+    transform: translateY(-4px);
+  }
+  
+  .homepage-button-card span {
+    margin-top: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }

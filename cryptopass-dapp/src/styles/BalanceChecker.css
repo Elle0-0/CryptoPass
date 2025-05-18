@@ -1,0 +1,98 @@
+.balance-checker-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #1a1a2e;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    font-family: 'Segoe UI', sans-serif;
+    color: #e0e0e0;
+  }
+  
+  .title {
+    text-align: center;
+    color: #9d4edd;
+    margin-bottom: 2rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .input, .input-file {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .input-file {
+    padding: 3px 10px;
+  }
+  
+  .button {
+    background-color: #5e60ce;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  
+  .button:hover {
+    background-color: #4caf50;
+  }
+  
+  .message {
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 500;
+    color: #0077cc;
+  }
+  
+  .wallet-details {
+    margin-top: 2rem;
+  }
+  
+  .wallet-details h3 {
+    margin-bottom: 1rem;
+  }
+  
+  .tab-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+  }
+  
+  .tab-button {
+    background-color: #f5f5f5;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color
+    0.3s ease;
+    font-size: 1rem;
+    }
+
+    .tab-button:hover {
+    background-color: #d6d6d6;
+    }
+
+    .tab-button.active {
+    background-color: #5e60ce;
+    color: white;
+    }
