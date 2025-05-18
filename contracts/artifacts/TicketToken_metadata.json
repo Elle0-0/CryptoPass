@@ -8,9 +8,34 @@
 			{
 				"inputs": [
 					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "_symbol",
+						"type": "string"
+					},
+					{
+						"internalType": "uint8",
+						"name": "_decimals",
+						"type": "uint8"
+					},
+					{
 						"internalType": "uint256",
 						"name": "initialSupply",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_ticketPrice",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "_vendor",
+						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -193,6 +218,24 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "burn",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint256",
 						"name": "amount",
 						"type": "uint256"
@@ -211,6 +254,25 @@
 						"internalType": "uint8",
 						"name": "",
 						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "doormen",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
 					}
 				],
 				"stateMutability": "view",
@@ -269,6 +331,24 @@
 					}
 				],
 				"name": "refundTicket",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "user",
+						"type": "address"
+					},
+					{
+						"internalType": "bool",
+						"name": "status",
+						"type": "bool"
+					}
+				],
+				"name": "setDoorman",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -405,8 +485,34 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "vendorBalances",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "withdraw",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "withdrawEarnings",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -452,11 +558,11 @@
 			]
 		},
 		"contracts/TicketToken.sol": {
-			"keccak256": "0xe20ac66c5a854ede558227bfbb97f533d858419de16f7701f2b86b03e424250c",
+			"keccak256": "0xd71a5b84de18f61585a782bae2d7efa9d55073723f30d74a5ab1231d62a2be2c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b262eba756dffa69d145b010a9bb794679c0b4b60cad2fcdb1b6a906707780a6",
-				"dweb:/ipfs/QmPfY1t3vxuRQXCRyco9MBevRDRyjKYruoy7EKt9QXMRUe"
+				"bzz-raw://90b1e366b56623c0a3b04b7c362d2fd0b61a7c145afa1900e9dfafdd63df8fd5",
+				"dweb:/ipfs/QmUYgxPafmU9rFNETgk6TtQRCHW8NTqD37UPTXMvhhMtcH"
 			]
 		}
 	},
