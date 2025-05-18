@@ -1,18 +1,49 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
 .App {
   text-align: center;
   margin-top: 2rem;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #5d3768;
 }
+
+h1, h2, h3 {
+  color: #5e60ce;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 button {
   padding: 10px 20px;
   margin-top: 10px;
   background: #5e60ce;
   border: none;
-
+  color: white;
   cursor: pointer;
   border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
+
+button:hover {
+  background-color: #4caf50;
+}
+
+button:active {
+  background-color: #3e8e41;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
 .tab-buttons {
   margin-bottom: 20px;
 }
@@ -34,4 +65,97 @@ button {
 .tab-content {
   margin-top: 20px;
 }
+.homepage {
+  text-align: center;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
 
+.homepage-header {
+  margin-bottom: 2rem;
+}
+
+.homepage-header h1 {
+  font-size: 2.5rem;
+  color: #5e60ce;
+}
+
+.homepage-header p {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.homepage-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.homepage-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #5e60ce;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.homepage-button:hover {
+  background-color: #4caf50;
+}
+
+.homepage-button:active {
+  background-color: #3e8e41;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #5e60ce;
+  padding: 10px 20px;
+  color: white;
+}
+
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  display: inline;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: #4caf50;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem 0;
+  background-color: #5e60ce;
+  color: white;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  font-size: 0.9rem;
+}

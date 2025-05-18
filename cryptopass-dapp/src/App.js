@@ -2,16 +2,25 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WalletPage from './pages/WalletPage';
 import './styles/App.css';
-// import AnotherPage from './pages/AnotherPage'; // later if you want
+import BalanceChecker from './pages/BalanceChecker';
+import BuyTicket from './components/BuyTicket';
+import ReturnTicket from './components/ReturnTicket';
+import HomePage from './pages/HomePage';
+import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <Router>
+      <NavBar />
       <Routes>
-        <Route path="/" element={<WalletPage />} />
-        {/* Example of adding more pages later */}
-        {/* <Route path="/another" element={<AnotherPage />} /> */}
+        <Route path="/" element={< HomePage/>} />
+        <Route path="/wallet" element={<WalletPage />} />
+        <Route path="/balance" element={<BalanceChecker />} />
+        <Route path="/buy-ticket" element={<BuyTicket />} />
+        <Route path="/return-ticket" element={<ReturnTicket />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

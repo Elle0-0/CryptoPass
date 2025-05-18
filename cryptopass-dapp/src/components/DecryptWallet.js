@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { initWeb3 } from './TicketToken';
 
 function DecryptWallet() {
   const [password, setPassword] = useState('');
@@ -20,84 +21,107 @@ function DecryptWallet() {
     }
   };
 
-  const decryptWallet = () => {
+  const decryptWallet = async () => {
     setError('');
     setWalletAddress('');
     setPrivateKey('');
-  
+
     if (!password) {
       setError('Please enter a password');
       setShowModal(true);
       return;
     }
-  
+
     if (!keystore) {
       setError('Please select a keystore file');
       setShowModal(true);
       return;
     }
-  
-  
+
     try {
-      const web3 = new window.Web3();
-      var wallet = web3.eth.accounts.decrypt(keystore, password);
-  
-      console.log("Keystore string:", keystore);
-      console.log("Wallet address:", wallet.address);
-  
+      const { web3 } = await initWeb3(); // Use the existing initWeb3 function
+      const wallet = web3.eth.accounts.decrypt(keystore, password);
+
+      console.log('Keystore string:', keystore);
+      console.log('Wallet address:', wallet.address);
+
       setWalletAddress(wallet.address);
       setPrivateKey(wallet.privateKey);
       setKeystoreText(keystore);
     } catch (err) {
-      console.error("Decryption failed:", err);
+      console.error('Decryption failed:', err);
       setError('Decryption failed: ' + err.message);
       setShowModal(true);
     }
   };
-  
 
   const closeModal = () => {
     setShowModal(false);
   };
 
   return (
-    <div className="DecryptWallet">
+    <div className="DecryptWallet" style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
       <h1>Decrypt a Wallet</h1>
 
-      <button onClick={decryptWallet}>Decrypt Wallet</button>
+      <div style={{ marginBottom: '20px' }}>
+        <label>
+          Password for Keystore:
+          <input
+            type="password"
+            placeholder="Enter a password for the Key Store"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ marginLeft: '10px', padding: '5px', width: '300px' }}
+          />
+        </label>
+      </div>
 
-      <br /><br />
+      <div style={{ marginBottom: '20px' }}>
+        <label>
+          Keystore File:
+          <input
+            type="file"
+            accept=".json"
+            onChange={handleFileUpload}
+            style={{ marginLeft: '10px' }}
+          />
+        </label>
+      </div>
 
-      <input 
-        type="password" 
-        placeholder="Enter a password for the Key Store"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <br /><br />
+      <button onClick={decryptWallet} style={{ padding: '10px 20px', cursor: 'pointer' }}>
+        Decrypt Wallet
+      </button>
 
-      <input 
-        type="file" 
-        accept=".json" 
-        onChange={handleFileUpload}
-      />
-      <br /><br />
-
-      <label>Wallet Address:</label><br />
-      <textarea rows="5" cols="50" value={walletAddress} readOnly />
-      <br />
-      <label>Private Key:</label><br />
-      <textarea rows="5" cols="50" value={privateKey} readOnly />
-      <br />
-      <label>Keystore File:</label><br />
-      <textarea rows="5" cols="50" value={keystoreText} readOnly />
+      {walletAddress && (
+        <div style={{ marginTop: '20px' }}>
+          <h3>Decrypted Wallet Details</h3>
+          <p>
+            <strong>Wallet Address:</strong>
+            <textarea rows="2" cols="50" value={walletAddress} readOnly style={{ marginTop: '10px' }} />
+          </p>
+          <p>
+            <strong>Private Key:</strong>
+            <textarea rows="2" cols="50" value={privateKey} readOnly style={{ marginTop: '10px' }} />
+          </p>
+          <p>
+            <strong>Keystore File:</strong>
+            <textarea rows="5" cols="50" value={keystoreText} readOnly style={{ marginTop: '10px' }} />
+          </p>
+        </div>
+      )}
 
       {/* Error Modal */}
       {showModal && (
-        <div className="modal">
+        <div className="modal" style={{ marginTop: '20px', border: '1px solid #ccc', padding: '10px' }}>
           <div className="modal-content">
-            <span className="close" onClick={closeModal}>&times;</span>
-            <p>{error}</p>
+            <span
+              className="close"
+              onClick={closeModal}
+              style={{ cursor: 'pointer', float: 'right', fontSize: '20px', fontWeight: 'bold' }}
+            >
+              &times;
+            </span>
+            <p style={{ color: 'red' }}>{error}</p>
           </div>
         </div>
       )}
