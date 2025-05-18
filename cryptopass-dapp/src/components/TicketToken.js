@@ -1,7 +1,7 @@
 import TicketTokenArtifact from '../abi/TicketToken.json';
 const TicketTokenABI = TicketTokenArtifact.abi;   
 
-const CONTRACT_ADDRESS = '0x1854cab9bdcaac14c95a9a58a41ef5defd607e33';
+const CONTRACT_ADDRESS = process.env.REACT_APP_CONTRACT_ADDRESS;
 
 let web3;
 let contract;
@@ -9,10 +9,10 @@ let contract;
 
 export const initWeb3 = async () => {
     if (window.ethereum) {
-      web3 = new window.Web3(window.ethereum); // Assign to global web3 variable
-      await window.ethereum.request({ method: 'eth_requestAccounts' }); // Request accounts permission
+      web3 = new window.Web3(window.ethereum); 
+      await window.ethereum.request({ method: 'eth_requestAccounts' }); 
   
-      contract = new web3.eth.Contract(TicketTokenABI, CONTRACT_ADDRESS); // Assign to global contract variable
+      contract = new web3.eth.Contract(TicketTokenABI, CONTRACT_ADDRESS);
       return { web3, contract };
     } else {
       throw new Error('MetaMask not found. Please install MetaMask.');
@@ -112,9 +112,6 @@ export const withdrawFunds = async (fromAddress) => {
   return contract.methods.withdraw().send({ from: fromAddress });
 };
 
-// ...existing code...
-
-// Burn Tickets
 export const burnTicket = async (fromAddress, amount) => {
   if (!contract || !web3) {
     await initWeb3();
@@ -122,7 +119,6 @@ export const burnTicket = async (fromAddress, amount) => {
   return contract.methods.burn(fromAddress, amount).send({ from: fromAddress });
 };
 
-// Set Doorman
 export const setDoorman = async (doormanAddress, status, fromAddress) => {
   if (!contract || !web3) {
     await initWeb3();

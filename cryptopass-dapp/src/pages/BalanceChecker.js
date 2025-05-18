@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import {
-  initWeb3, getBalance, getTicketPrice, getVendor, getTotalSupply } from '../components/TicketToken';
+  initWeb3,
+  getBalance,
+  getTicketPrice,
+  getVendor,
+  getTotalSupply,
+  withdrawVendorEarnings,
+} from '../components/TicketToken';
 import Web3 from 'web3';
-import '../styles/BalanceChecker.css'; 
+import '../styles/BalanceChecker.css';
 
 const BalanceChecker = () => {
   const [tab, setTab] = useState('user');
@@ -17,6 +23,7 @@ const BalanceChecker = () => {
   const [burnTarget, setBurnTarget] = useState('');
   const [burnAmount, setBurnAmount] = useState('1');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const connectWallet = async () => {
     try {
@@ -99,6 +106,23 @@ const BalanceChecker = () => {
     } catch (error) {
       console.error('Error burning ticket:', error);
       setMessage('Failed to burn ticket.');
+    }
+  };
+
+  const handleWithdrawVendorEarnings = async () => {
+    try {
+      setLoading(true);
+      const { web3 } = await initWeb3();
+      const accounts = await web3.eth.getAccounts();
+      const vendor = accounts[0];
+
+      await withdrawVendorEarnings(vendor);
+      setMessage('Vendor earnings withdrawn successfully.');
+    } catch (error) {
+      console.error('Error withdrawing vendor earnings:', error);
+      setMessage('Failed to withdraw vendor earnings.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -197,6 +221,14 @@ const BalanceChecker = () => {
           <p>Ticket Price: {ticketPrice || '-' } ETH</p>
           <p>Total Tickets Minted: {totalTickets || '-'}</p>
           <p>Vendor Address: {vendorAddress || '-'}</p>
+
+          <button
+            className="button"
+            onClick={handleWithdrawVendorEarnings}
+            disabled={loading}
+          >
+            {loading ? 'Withdrawing...' : 'Withdraw Vendor Earnings'}
+          </button>
         </>
       )}
 

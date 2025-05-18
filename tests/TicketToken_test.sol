@@ -11,7 +11,6 @@ contract TicketTokenTest {
     uint256 initialSupply = 1000;
     uint256 ticketPrice;
 
-    
 
     // Helper to fund a contract
     receive() external payable {}
@@ -82,19 +81,6 @@ contract TicketTokenTest {
         Assert.ok(!success, "transferFrom should fail without approval");
     }
 
-    // function testBuyTicketSuccess() public {
-    //     uint256 amount = 2;
-    //     uint256 value = ticketPrice * amount;
-
-    //     // Send value and call buyTicket
-    //     (bool success, ) = address(token).call{value: value}(
-    //         abi.encodeWithSignature("buyTicket(uint256)", amount)
-    //     );
-    //     Assert.ok(success, "buyTicket failed");
-    //     Assert.equal(token.balanceOf(address(this)), amount, "Tickets not received");
-    // }
-
-
 
     function testBuyTicketFailsWrongEth() public {
         (bool success, ) = address(token).call{value: ticketPrice / 2}(
@@ -103,24 +89,6 @@ contract TicketTokenTest {
         Assert.ok(!success, "Should fail due to incorrect ETH");
     }
 
-    // function testRefundTicketSuccess() public {
-    //     uint256 amount = 1;
-    //     (bool buySuccess, ) = address(token).call{value: ticketPrice}(
-    //         abi.encodeWithSignature("buyTicket(uint256)", amount)
-    //     );
-    //     Assert.ok(buySuccess, "buyTicket failed");
-
-    //     uint256 balanceBefore = address(this).balance;
-
-    //     // Refund
-    //     (bool refundSuccess, ) = address(token).call(
-    //         abi.encodeWithSignature("refundTicket(uint256)", amount)
-    //     );
-    //     Assert.ok(refundSuccess, "refundTicket failed");
-
-    //     uint256 balanceAfter = address(this).balance;
-    //     Assert.ok(balanceAfter > balanceBefore, "ETH not refunded");
-    // }
 
     function testRefundTicketFails_NotEnoughBalance() public {
         (bool success, ) = address(token).call(
@@ -148,17 +116,6 @@ contract TicketTokenTest {
         Assert.ok(!success, "setVendor should fail for zero address");
     }
 
-    // function testWithdrawOnlyOwner() public {
-    //     // Send some ETH to contract
-    //     (bool sent, ) = payable(address(token)).call{value: 1 ether}("");
-    //     Assert.ok(sent, "Failed to fund contract");
-
-    //     uint256 before = address(this).balance;
-    //     token.withdraw();
-    //     uint256 afterBal = address(this).balance;
-
-    //     Assert.ok(afterBal > before, "Owner should receive ETH");
-    // }
     function testWithdrawFails_NotEnoughBalance() public {
         (bool success, ) = address(token).call{value: ticketPrice}(
             abi.encodeWithSignature("withdraw()")

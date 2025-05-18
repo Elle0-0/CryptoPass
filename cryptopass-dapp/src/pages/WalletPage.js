@@ -7,7 +7,8 @@ function WalletPage() {
 
   return (
     <div className="wallet-page-container">
-      <h1 className="wallet-title">Wallet Management</h1>
+      <br />
+      <h1 className="title">Wallet Management</h1>
 
       <div className="tab-buttons">
         <button

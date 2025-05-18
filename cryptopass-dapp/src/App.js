@@ -8,6 +8,7 @@ import ReturnTicket from './components/ReturnTicket';
 import HomePage from './pages/HomePage';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
+import Shows from './components/Shows';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/balance" element={<BalanceChecker />} />
         <Route path="/buy-ticket" element={<BuyTicket />} />
         <Route path="/return-ticket" element={<ReturnTicket />} />
+        <Route path="/shows" element={<Shows />} />
       </Routes>
       <Footer />
     </Router>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Wallet, CreditCard, Ticket, RotateCcw } from 'lucide-react'; // Icon library
-import '../styles/HomePage.css'; // CSS for styling
+import { Wallet, CreditCard, Ticket, RotateCcw, Calendar } from 'lucide-react'; 
+import '../styles/HomePage.css'; 
 
 const HomePage = () => {
   return (
     <div className="homepage">
       <header className="homepage-header">
         <h1>Welcome to CryptoPass</h1>
-        <p>Secure and seamless blockchain ticketing—right at your fingertips.</p>
+        <p>Breaking the chain of paper tickets, One block at a time</p>
       </header>
 
       <div className="homepage-buttons-grid">
@@ -30,6 +30,11 @@ const HomePage = () => {
         <Link to="/return-ticket" className="homepage-button-card">
           <RotateCcw size={32} />
           <span>Return Tickets</span>
+        </Link>
+
+        <Link to="/shows" className="homepage-button-card">
+          <Calendar size={32} />
+          <span>What's On</span>
         </Link>
       </div>
     </div>

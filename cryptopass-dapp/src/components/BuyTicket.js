@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { initWeb3, getTicketPrice, buyTicket } from './TicketToken';
-import '../styles/BuyTicket.css'; // Import the CSS file
+import { initWeb3, getTicketPrice } from './TicketToken';
+import '../styles/BuyTicket.css';
 
 const BuyTicket = () => {
   const [walletAddress, setWalletAddress] = useState('');
@@ -11,6 +11,8 @@ const BuyTicket = () => {
   const [walletBalance, setWalletBalance] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [transactionRequest, setTransactionRequest] = useState(null); 
+  const [transactionResult, setTransactionResult] = useState(null); 
 
   const connectWallet = async () => {
     try {
@@ -52,6 +54,9 @@ const BuyTicket = () => {
 
     setLoading(true);
     setMessage('');
+    setTransactionRequest(null);
+    setTransactionResult(null);
+
     try {
       const { web3 } = await initWeb3();
       const priceInEther = await getTicketPrice();
@@ -69,13 +74,9 @@ const BuyTicket = () => {
       }
 
       if (walletAddress) {
-        await buyTicket(ticketAmount, walletAddress);
-        setMessage(`Successfully purchased ${ticketAmount} ticket(s) using MetaMask.`);
-      } else if (keystore && password) {
-        const wallet = web3.eth.accounts.decrypt(keystore, password);
-
-        const tx = {
-          to: '0x69775bbd965cb4af12d24ee583122d2ef70dfaf9',
+        const txRequest = {
+          from: walletAddress,
+          to: process.env.REACT_APP_CONTRACT_ADDRESS,
           value: totalCost,
           gas: 2000000,
           data: web3.eth.abi.encodeFunctionCall(
@@ -88,8 +89,33 @@ const BuyTicket = () => {
           ),
         };
 
-        const signedTx = await web3.eth.accounts.signTransaction(tx, wallet.privateKey);
+        setTransactionRequest(txRequest); // Save transaction request
+
+        const receipt = await web3.eth.sendTransaction(txRequest);
+        setTransactionResult(receipt); // Save transaction result
+        setMessage(`Successfully purchased ${ticketAmount} ticket(s).`);
+      } else if (keystore && password) {
+        const wallet = web3.eth.accounts.decrypt(keystore, password);
+
+        const txRequest = {
+          to: '0x1854cab9bdcaac14c95a9a58a41ef5defd607e33',
+          value: totalCost,
+          gas: 2000000,
+          data: web3.eth.abi.encodeFunctionCall(
+            {
+              name: 'buyTicket',
+              type: 'function',
+              inputs: [{ type: 'uint256', name: 'amount' }],
+            },
+            [ticketAmount]
+          ),
+        };
+
+        setTransactionRequest(txRequest); // Save transaction request
+
+        const signedTx = await web3.eth.accounts.signTransaction(txRequest, wallet.privateKey);
         const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+        setTransactionResult(receipt); // Save transaction result
         setMessage(`Successfully purchased ${ticketAmount} ticket(s). Transaction Hash: ${receipt.transactionHash}`);
       }
     } catch (error) {
@@ -152,6 +178,20 @@ const BuyTicket = () => {
       </div>
 
       {message && <p className={`message ${loading ? 'loading' : 'error'}`}>{message}</p>}
+
+      {transactionRequest && (
+        <div className="transaction-details">
+          <h3>Transaction Request</h3>
+          <pre>{JSON.stringify(transactionRequest, null, 2)}</pre>
+        </div>
+      )}
+
+      {transactionResult && (
+        <div className="transaction-details">
+          <h3>Transaction Result</h3>
+          <pre>{JSON.stringify(transactionResult, null, 2)}</pre>
+        </div>
+      )}
     </div>
   );
 };

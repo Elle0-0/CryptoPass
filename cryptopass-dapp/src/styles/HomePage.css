@@ -1,7 +1,7 @@
 .homepage {
     text-align: center;
     padding: 4rem 2rem;
-    background: linear-gradient(135deg, #1a1a2e, #16213e); /* Dark gradient background */
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
     min-height: 100vh;
     display: flex;
     flex-direction: column;

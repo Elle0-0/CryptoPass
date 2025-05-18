@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { initWeb3, refundTicket, getTicketPrice, getBalance } from './TicketToken';
+import { initWeb3, getTicketPrice, getBalance } from './TicketToken';
 import '../styles/ReturnTicket.css';
 
 const ReturnTicket = () => {
@@ -7,9 +7,11 @@ const ReturnTicket = () => {
   const [keystore, setKeystore] = useState(null);
   const [password, setPassword] = useState('');
   const [ticketAmount, setTicketAmount] = useState('');
-  const [ticketBalance, setTicketBalance] = useState(0); // Track user's ticket balance
+  const [ticketBalance, setTicketBalance] = useState(0);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [transactionRequest, setTransactionRequest] = useState(null); // Store transaction request
+  const [transactionResult, setTransactionResult] = useState(null); // Store transaction result
 
   const connectWallet = async () => {
     try {
@@ -66,6 +68,9 @@ const ReturnTicket = () => {
 
     setLoading(true);
     setMessage('');
+    setTransactionRequest(null);
+    setTransactionResult(null);
+
     try {
       const { web3 } = await initWeb3();
       const priceInEther = await getTicketPrice();
@@ -73,20 +78,9 @@ const ReturnTicket = () => {
       const totalRefund = web3.utils.toBN(priceInWei).mul(web3.utils.toBN(ticketAmount)).toString();
 
       if (walletAddress) {
-        await refundTicket(ticketAmount, walletAddress);
-        setMessage(`Successfully returned ${ticketAmount} ticket(s) for ${web3.utils.fromWei(totalRefund, 'ether')} ETH.`);
-
-        // Update the ticket balance after returning tickets
-        const updatedBalance = await getBalance(walletAddress);
-        setTicketBalance(updatedBalance);
-
-        if (updatedBalance === 0) {
-          setMessage('You have returned all your tickets.');
-        }
-      } else if (keystore && password) {
-        const wallet = web3.eth.accounts.decrypt(keystore, password);
-        const tx = {
-          to: '0x69775bbd965cb4af12d24ee583122d2ef70dfaf9',
+        const txRequest = {
+          from: walletAddress,
+          to: process.env.REACT_APP_CONTRACT_ADDRESS,
           gas: 2000000,
           data: web3.eth.abi.encodeFunctionCall(
             {
@@ -98,11 +92,41 @@ const ReturnTicket = () => {
           ),
         };
 
-        const signedTx = await web3.eth.accounts.signTransaction(tx, wallet.privateKey);
+        setTransactionRequest(txRequest); // Save transaction request
+
+        const receipt = await web3.eth.sendTransaction(txRequest);
+        setTransactionResult(receipt); // Save transaction result
+        setMessage(`Successfully returned ${ticketAmount} ticket(s) for ${web3.utils.fromWei(totalRefund, 'ether')} ETH.`);
+
+        const updatedBalance = await getBalance(walletAddress);
+        setTicketBalance(updatedBalance);
+
+        if (updatedBalance === 0) {
+          setMessage('You have returned all your tickets.');
+        }
+      } else if (keystore && password) {
+        const wallet = web3.eth.accounts.decrypt(keystore, password);
+
+        const txRequest = {
+          to: '0x1854cab9bdcaac14c95a9a58a41ef5defd607e33',
+          gas: 2000000,
+          data: web3.eth.abi.encodeFunctionCall(
+            {
+              name: 'refundTicket',
+              type: 'function',
+              inputs: [{ type: 'uint256', name: 'amount' }],
+            },
+            [ticketAmount]
+          ),
+        };
+
+        setTransactionRequest(txRequest); // Save transaction request
+
+        const signedTx = await web3.eth.accounts.signTransaction(txRequest, wallet.privateKey);
         const receipt = await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+        setTransactionResult(receipt); // Save transaction result
         setMessage(`Successfully returned ${ticketAmount} ticket(s). Transaction Hash: ${receipt.transactionHash}`);
 
-        // Update the ticket balance after returning tickets
         const updatedBalance = await getBalance(wallet.address);
         setTicketBalance(updatedBalance);
 
@@ -172,6 +196,20 @@ const ReturnTicket = () => {
       </div>
 
       {message && <p className={`message ${loading ? 'loading' : message.includes('successfully') ? 'success' : 'error'}`}>{message}</p>}
+
+      {transactionRequest && (
+        <div className="transaction-details">
+          <h3>Transaction Request</h3>
+          <pre>{JSON.stringify(transactionRequest, null, 2)}</pre>
+        </div>
+      )}
+
+      {transactionResult && (
+        <div className="transaction-details">
+          <h3>Transaction Result</h3>
+          <pre>{JSON.stringify(transactionResult, null, 2)}</pre>
+        </div>
+      )}
     </div>
   );
 };
