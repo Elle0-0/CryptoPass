@@ -182,4 +182,4 @@ The contract is live on the Sepolia testnet with verified transactions:
 
 ## License
 
-This project was developed as part of a Final Year Project for CS4455 at university.
+This project was developed as part of a Project for CS4455 at The University of Limerick.
